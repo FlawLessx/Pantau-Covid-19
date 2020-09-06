@@ -1,11 +1,20 @@
-import 'package:covid/screen/splashscreen/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:covid/bloc/global/global_bloc.dart';
-import 'package:covid/bloc/globalTotal/globaltotal_bloc.dart';
-import 'package:covid/bloc/indo/indo_bloc.dart';
-import 'package:covid/bloc/provinsi/provinsi_bloc.dart';
-import 'package:covid/resources/repository.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'core/bloc/fecth_data/fetch_data_bloc.dart';
+import 'core/resources/repository.dart';
+import 'core/util/route_generator.dart';
+import 'ui/screen/splashscreen/splash_screen.dart';
+
+//
+// ROUTE VARIABLES
+//
+const String splashScreenRoute = '/';
+const String homeRoute = '/home';
+const String provinsiRoute = '/provinsi';
+const String detailCardRoute = '/detail';
+const String moreInfoRoute = '/moreInfo';
 
 void main() {
   runApp(MyApp());
@@ -18,34 +27,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final IndoBloc _indoBloc = IndoBloc(Repository());
-  final GlobaltotalBloc _globaltotalBloc = GlobaltotalBloc(Repository());
-  final ProvinsiBloc _provinsiBloc = ProvinsiBloc(Repository());
-  final GlobalBloc _globalBloc = GlobalBloc(Repository());
+  final FetchDataBloc _fecthDataBloc = FetchDataBloc(Repository());
 
   @override
   void initState() {
-    _indoBloc.add(GetDataIndo());
-    _provinsiBloc.add(GetDataProvinsi());
-    _globaltotalBloc.add(GetDataGlobalTotal());
-    _globalBloc.add(GetDataGlobal());
+    _fecthDataBloc.add(GetDataFromAPI());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return MultiBlocProvider(
       providers: [
-        BlocProvider<IndoBloc>(create: (context) => _indoBloc),
-        BlocProvider<GlobaltotalBloc>(create: (context) => _globaltotalBloc),
-        BlocProvider<ProvinsiBloc>(
-          create: (context) => _provinsiBloc,
-        ),
-        BlocProvider<GlobalBloc>(
-          create: (context) => _globalBloc,
-        )
+        BlocProvider<FetchDataBloc>(create: (context) => _fecthDataBloc),
       ],
       child: MaterialApp(
+        onGenerateRoute: RouteGenerator().onGenerateRoute,
+        initialRoute: splashScreenRoute,
         title: 'Pantau Covid-19',
         theme: ThemeData(
           fontFamily: 'Montserrat Bold',

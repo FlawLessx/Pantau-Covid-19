@@ -1,16 +1,21 @@
-# covid
+# Pantau Covid-19
 
-A new Flutter project.
+Project aplikasi untuk memantau perkembangan covid-19 di Indonesia dan di dunia
 
-## Getting Started
+## Screenshot
 
-This project is a starting point for a Flutter application.
+<img src="src/img/Mockup.jpg" width="35%"></img>
 
-A few resources to get you started if this is your first Flutter project:
+## Changelog
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Version 1.0.1
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Cleanup code
+
+### Version 1.0.0+1
+
+* Initial release
+
+## Notes
+
+Jika aplikasi stuck di loading itu dikarenakan server penyedia api Indonesia (api.kawalcorona.com) seringkali down
